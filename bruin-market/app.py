@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, url_for, jsonify
+from flask import Flask, render_template, redirect, request, url_for, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 
 from routes import user, session, transfer, gift
@@ -101,7 +101,9 @@ def gift_view(id):
         if gift.recipient_id != user_id:
             return redirect(url_for("gift_page")), 401
 
-        return render_template("gift-view.html", auth=auth, csp=True, gift=gift), 200
+        response = make_response(render_template("gift-view.html", auth=auth, csp=True, gift=gift), 200)
+        response.headers['Content-Security-Policy'] = "style-src 'self'"
+        return response
 
 
 @app.route("/profile")
