@@ -102,7 +102,7 @@ def gift_view(id):
             return redirect(url_for("gift_page")), 401
 
         response = make_response(render_template("gift-view.html", auth=auth, csp=True, gift=gift), 200)
-        response.headers['Content-Security-Policy'] = "style-src 'self'"
+        response.headers['Content-Security-Policy'] = "style-src 'self';"
         return response
 
 
